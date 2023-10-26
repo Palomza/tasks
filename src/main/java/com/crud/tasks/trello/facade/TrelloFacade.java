@@ -10,12 +10,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class TrelloFacade {
-    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(TrelloFacade.class);
 
     private final TrelloService trelloService;
     private final TrelloMapper trelloMapper;
