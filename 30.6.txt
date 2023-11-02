@@ -1,0 +1,11 @@
+EXPLAIN SELECT * FROM READERS WHERE FirstName = 'John';
+
+CREATE INDEX idx_readers_firstname ON READERS (FirstName);
+
+EXPLAIN SELECT * FROM READERS WHERE FirstName = 'John';
+
+EXPLAIN SELECT * FROM BOOKS WHERE Title = 'BookName';
+
+CREATE INDEX idx_books_title ON BOOKS (Title);
+
+EXPLAIN SELECT * FROM BOOKS WHERE Title = 'BookName';

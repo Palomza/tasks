@@ -1,0 +1,33 @@
+CREATE TABLE STATS (
+                       STAT_ID INT(11) AUTO_INCREMENT PRIMARY KEY,
+                       STAT_DATE DATETIME NOT NULL,
+                       STAT VARCHAR(20) NOT NULL,
+                       VALUE INT(11) NOT NULL
+);
+
+CREATE VIEW BESTSELLERS_COUNT AS
+SELECT COUNT(*) AS BESTSELLER_COUNT
+FROM BOOKS
+WHERE BESTSELLER = 1;
+
+DELIMITER $$
+
+CREATE EVENT UpdateBestsellersEvent
+    ON SCHEDULE EVERY 1 HOUR
+    DO
+    BEGIN
+        DECLARE bestsellerCount INT;
+
+        CALL UpdateBestsellers();
+
+        SELECT BESTSELLER_COUNT INTO bestsellerCount FROM BESTSELLERS_COUNT;
+
+        INSERT INTO STATS (STAT_DATE, STAT, VALUE)
+        VALUES (NOW(), 'BESTSELLERS', bestsellerCount);
+    END $$
+
+DELIMITER ;
+
+ALTER EVENT UpdateBestsellersEvent ENABLE;
+
+ALTER EVENT UpdateBestsellersEvent DISABLE;
